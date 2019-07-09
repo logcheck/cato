@@ -35,7 +35,7 @@ module Cato
     end
 
     def xcodebuild_command(options)
-      ['xcrun', 'xcodebuild', '-quiet'].tap do |args|
+      ['/usr/bin/xcrun', 'xcodebuild', '-quiet'].tap do |args|
         options.each do |name, value|
           if value
             if name[0] =~ /[A-Z]/

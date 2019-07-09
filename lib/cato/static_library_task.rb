@@ -78,7 +78,9 @@ module Cato
         rm_f target_path
 
         if source_list.length > 1
-          merge_command = ['xcrun', 'lipo', '-create', '-output', target_path]
+          merge_command = ['/usr/bin/xcrun', 'lipo',
+                           '-create',
+                           '-output', target_path]
           sh(*(merge_command + source_list))
         else
           cp source_list.first, target_path

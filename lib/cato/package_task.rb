@@ -90,7 +90,7 @@ module Cato
 
       file download_path do
         mkpath CATO_DOWNLOADS_DIR
-        sh 'curl',
+        sh '/usr/bin/curl',
            '--silent', '--fail', '--show-error', '--location',
            '--output', download_path,
            download_url
@@ -123,7 +123,7 @@ module Cato
         rmtree checkout_path
         mkpath checkout_path
 
-        sh 'tar',
+        sh '/usr/bin/tar',
            '-xf', download_path,
            '-C', checkout_path,
            '--strip-components', strip_levels
