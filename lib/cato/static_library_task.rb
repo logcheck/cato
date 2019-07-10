@@ -14,7 +14,7 @@ module Cato
       @package = package
       @name = name
       # these defaults assume we're building from source
-      @headers_path = "Build/Products/*/include/#{name}"
+      @headers_path = "Build/Products/*/include/#{name}/*.h"
       @library_path = "Build/Products/*/lib#{name}.a"
     end
 
@@ -27,7 +27,7 @@ module Cato
         @dependency = @package.checkout_path
       end
 
-      define_headers_tasks
+      define_headers_tasks if @headers_path
       define_library_tasks
     end
 
@@ -39,7 +39,14 @@ module Cato
       directory target_path => @dependency do
         source_list = FileList.new(File.join(@source_dir, @headers_path))
 
-        copy_headers(source_list.first, target_path)
+        if source_list.empty?
+          raise "no headers found for #{name}; set headers_path = false " +
+                "if there are no headers to copy"
+        end
+
+        rmtree target_path
+        mkpath target_path
+        source_list.each { |file| cp file, target_path }
       end
 
       CLOBBER.include(target_path)
@@ -51,17 +58,13 @@ module Cato
         task 'cato:install' => install_path
 
         directory install_path => target_path do
-          copy_headers(target_path, install_path)
+          rmtree install_path
+          mkpath install_path
+          cp_r File.join(target_path, '.'), install_path
         end
 
         CLEAN.include(install_path)
       end
-    end
-
-    def copy_headers(source_path, target_path)
-      rmtree target_path
-      mkpath target_path
-      cp_r File.join(source_path, '.'), target_path
     end
 
     def define_library_tasks
