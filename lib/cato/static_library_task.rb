@@ -46,7 +46,7 @@ module Cato
 
         rmtree target_path
         mkpath target_path
-        source_list.each { |file| cp file, target_path }
+        source_list.each { |file| cp file, target_path, preserve: true }
       end
 
       CLOBBER.include(target_path)
@@ -60,7 +60,7 @@ module Cato
         directory install_path => target_path do
           rmtree install_path
           mkpath install_path
-          cp_r File.join(target_path, '.'), install_path
+          cp_r File.join(target_path, '.'), install_path, preserve: true
         end
 
         CLEAN.include(install_path)
@@ -85,8 +85,11 @@ module Cato
                            '-create',
                            '-output', target_path]
           sh(*(merge_command + source_list))
+
+          t = source_list.map { |f| File.mtime(f) }.max
+          File.utime(t, t, target_path)
         else
-          cp source_list.first, target_path
+          cp source_list.first, target_path, preserve: true
         end
       end
 
@@ -99,7 +102,7 @@ module Cato
 
         file install_path => target_path do
           rm_f install_path
-          cp target_path, install_path
+          cp target_path, install_path, preserve: true
         end
 
         CLEAN.include(install_path)

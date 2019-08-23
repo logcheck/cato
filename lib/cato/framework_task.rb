@@ -63,11 +63,11 @@ module Cato
 
     def copy_framework(source_path, target_path)
       rmtree target_path
-      cp_r source_path, target_path
+      cp_r source_path, target_path, preserve: true
 
       rmtree target_path + '.dSYM'
       if File.exist?(source_path + '.dSYM')
-        cp_r source_path + '.dSYM', target_path + '.dSYM'
+        cp_r source_path + '.dSYM', target_path + '.dSYM', preserve: true
       end
     end
   end

@@ -20,7 +20,7 @@ module Cato
         ACKNOWLEDGMENTS.each do |name, source_path|
           target_path = File.join(@bundle_path, "_#{name}.plist")
 
-          FileUtils.cp source_path, target_path
+          cp source_path, target_path, preserve: true
         end
 
         settings_obj = {
