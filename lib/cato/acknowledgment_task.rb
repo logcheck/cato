@@ -64,7 +64,7 @@ module Cato
           {
             'Type'       => 'PSGroupSpecifier',
             'Title'      => @name,
-            'FooterText' => File.read(text_path)
+            'FooterText' => File.read(text_path, encoding: 'UTF-8')
           }
         ]
       }
