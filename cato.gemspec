@@ -33,7 +33,7 @@ DESCRIPTION
   spec.require_paths = ["lib"]
 
   # macOS 10.14.5 includes rake 10.4.2 and CFPropertyList 2.2.8.
-  spec.add_dependency "rake", "~> 10.4"
+  spec.add_dependency "rake", ">= 10.4", "< 14.0"
   spec.add_dependency "CFPropertyList", "~> 2.2"
 
   spec.add_development_dependency "bundler", "~> 2.0"
