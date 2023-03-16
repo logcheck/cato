@@ -2,15 +2,15 @@ PATH
   remote: .
   specs:
     cato (1.0.0)
-      CFPropertyList (~> 2.2)
-      rake (~> 10.4)
+      CFPropertyList (~> 2.3)
+      rake (~> 13.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     CFPropertyList (2.3.6)
     minitest (5.11.3)
-    rake (10.5.0)
+    rake (13.0.6)
 
 PLATFORMS
   ruby
